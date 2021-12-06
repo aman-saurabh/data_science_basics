@@ -28,7 +28,7 @@ from sklearn.linear_model import LinearRegression
 lin_reg = LinearRegression()
 lin_reg.fit(X, y)
 # predicting salary with 6.5 years of experience i.e y_pred at X = 6.5
-y_lin_reg_pred = lin_reg.predict()
+y_lin_reg_pred = lin_reg.predict(X)
 
 # Step5 - Fitting Polynomial Linear Regression to the dataset
 from sklearn.preprocessing import PolynomialFeatures
@@ -39,7 +39,7 @@ X_poly = poly_reg.fit_transform(X)
 # add a columns of 1s manually like what we did in multiple linear regression
 poly_lin_reg = LinearRegression()
 poly_lin_reg.fit(X_poly, y)
-y_poly_reg_pred = poly_lin_reg.predict(poly_reg.fit_transform(6.5))
+y_poly_reg_pred = poly_lin_reg.predict(poly_reg.fit_transform(X_poly))
 
 # Visualizing the Linear regression result
 plt.scatter(X, y, color='red')
@@ -49,7 +49,7 @@ plt.xlabel('Position Level')
 plt.ylabel('Salary')
 plt.show()
 
-# Visualizing the Linear regression result
+# Visualizing the polynomial regression result
 plt.scatter(X, y, color='red')
 plt.plot(X, poly_lin_reg.predict(poly_reg.fit_transform(X)), color='blue')
 plt.title('Truth or bulff (Polynomial Regression)')
