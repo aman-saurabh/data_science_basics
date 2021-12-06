@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Sun Dec  5 22:44:30 2021
+Created on Tue Dec  7 01:36:35 2021
 
 @author: aman
 """
-
 # Step1 - Importing required libraries
 import numpy as np
 import matplotlib.pyplot as plt
@@ -30,38 +29,24 @@ y = sc_y.fit_transform(y.reshape(-1, 1))
 # StandardScaler's transform method needs 2-d array.
 """
 
-# Step5 - Fitting Polynomial Linear Regression to the dataset
-# Define your regressor here.With same name as used in step5 i.e 'regressor', 
-# or change the name of regressor object in step5 also. 
+# Step5 - Fitting Random Forest Regression to the dataset
+from sklearn.ensemble import RandomForestRegressor
+regressor = RandomForestRegressor(n_estimators = 300, random_state=0)
+# change value of 'n_estimators' for different values like 10, 100, 400 etc. 
+# and check y_pred_value and graph for them
+regressor.fit(X, y)
+y_pred = regressor.predict(X)
 
 # Step 6 - To find value of y for a particular value of X.
-# Case 1 - If values(i.e X and y) are not featured scaled explicitely
 y_pred_value = regressor.predict(np.array([[6.5]]))
 
-# Case 2 - If values are feature scaled explicitely
-"""
-y_pred_value = regressor.predict(sc_X.transform(np.array([[6.5]])))
-# But above line will give you result in scaled format. So execute following 
-# code to get actual value of y corresponding to X=6.5.
-y_pred_value = sc_y.inverse_transform(y_pred2)
-"""
-
-# Step7 - Visualizing the Linear regression result
-plt.scatter(X, y, color='red')
-plt.plot(X, regressor.predict(X), color='blue')
-plt.title('Truth or bluff (Regression model)')
-plt.xlabel('Position Level')
-plt.ylabel('Salary')
-plt.show()
-
-# Same as above but for smooth curve in the graph.
-X_grid = np.arange(min(X), max(X), 0.1)
+# Step7 - Visualizing the Random Forest regression result
+X_grid = np.arange(min(X), max(X), 0.01)
 # Following line will just convert X_grid from array to matrix
 X_grid = X_grid.reshape(len(X_grid), 1)
-# Now again plot the graph same as above
 plt.scatter(X, y, color='red')
 plt.plot(X_grid, regressor.predict(X_grid), color='blue')
-plt.title('Truth or bluff (Regression model with smooth curve)')
+plt.title('Truth or bluff (Random Forest Regression Model)')
 plt.xlabel('Position Level')
 plt.ylabel('Salary')
 plt.show()
