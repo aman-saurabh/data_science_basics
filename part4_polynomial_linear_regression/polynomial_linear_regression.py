@@ -17,29 +17,38 @@ dataset = pd.read_csv('Position_Salaries.csv')
 # Step3 - Defining Feature matrix(X) and target array(y)
 X = dataset.iloc[:, 1:2].values
 y = dataset.iloc[:, -1].values
-# Here we are considering only 2nd column in X (i.e only column at index 1)and 
-# only 4th(i.e last) column in y(i.e column at index 3 or -1). Which means in
-# both X and y we used only 1 column but we used different format in both cases 
-# why? Actually we could have defined X as "dataset.iloc[:, 1].values" also but
-# in that case it was treated as Array and not.
+"""
+Here we are considering only 2nd column in X (i.e only column at index 1)and 
+only 4th(i.e last) column in y(i.e column at index 3 or -1). Which means in
+both X and y we used only 1 column but we used different format in both cases 
+why? Actually we could have defined X as "dataset.iloc[:, 1].values" also but
+in that case it was treated as Array and not.
+"""
 
 # Step4 - Fitting Simple Linear Regression to the dataset
 from sklearn.linear_model import LinearRegression
 lin_reg = LinearRegression()
 lin_reg.fit(X, y)
-# predicting salary with 6.5 years of experience i.e y_pred at X = 6.5
+# predicting values of y corresponding to x
 y_lin_reg_pred = lin_reg.predict(X)
+# predicting salary with 6.5 years of experience i.e y_pred at X = 6.5
+y_lin_reg_pred2 = lin_reg.predict(np.array([[6.5]]))
 
 # Step5 - Fitting Polynomial Linear Regression to the dataset
 from sklearn.preprocessing import PolynomialFeatures
 poly_reg = PolynomialFeatures(degree = 5)
 X_poly = poly_reg.fit_transform(X)
-# Now if you instect "X_poly" you will find it created 3 columns from 1 column 
-# of X and first column is the columns of 1.So in this case we don't need to 
-# add a columns of 1s manually like what we did in multiple linear regression
+"""
+Now if you instect "X_poly" you will find it created 3 columns from 1 column 
+of X and first column is the columns of 1.So in this case we don't need to 
+add a columns of 1s manually like what we did in multiple linear regression
+"""
 poly_lin_reg = LinearRegression()
 poly_lin_reg.fit(X_poly, y)
-y_poly_reg_pred = poly_lin_reg.predict(poly_reg.fit_transform(X_poly))
+# predicting values of y corresponding to x
+y_poly_reg_pred = poly_lin_reg.predict(X_poly)
+# predicting salary with 6.5 years of experience i.e y_pred at X = 6.5
+y_poly_reg_pred2 = poly_lin_reg.predict(poly_reg.fit_transform(np.array([[6.5]])))
 
 # Visualizing the Linear regression result
 plt.scatter(X, y, color='red')

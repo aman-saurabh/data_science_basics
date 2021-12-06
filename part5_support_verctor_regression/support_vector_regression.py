@@ -33,8 +33,13 @@ y = sc_y.fit_transform(y.reshape(-1, 1))
 from sklearn.svm import SVR
 regressor = SVR(kernel='rbf')
 regressor.fit(X, y)
-# Predicting the result
+# predicting values of y corresponding to x
 y_pred = regressor.predict(X)
+# predicting salary with 6.5 years of experience i.e y_pred at X = 6.5
+y_pred2 = regressor.predict(sc_X.transform(np.array([[6.5]])))
+# But above line will give you result in scaled format.So execute following 
+# code to get actual value of y corresponding to X=6.5
+y_pred_final = sc_y.inverse_transform(y_pred2)
 
 # Step5 - Visualizing the support vector regression result
 plt.scatter(X, y, color='red')
