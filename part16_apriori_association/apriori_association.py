@@ -24,10 +24,12 @@ in the transaction is contained here in a seperate column which is not a
 proper format for input data in most machine learning models.So we need to 
 restructure it.  
 """ 
+# Step3 - Restructuring data
 transactions = []
 for i in range(0, 7501):
     transactions.append([str(dataset.values[i,j]) for j in range(0, 20)])
     
+# Step4 - Importing and applying apriori function
 from apriori import apriori
 # Here we are not importing apriori function from any library but we are 
 # importing it from a local file apriori.py which we have stored in the same 
@@ -49,6 +51,6 @@ consequent is not good.So we should always choose lift > 1.Here dataset is
 large so let's start with 3, if it doesn't work, we will try it with 4,5,6 etc.      
 """
 
-# Visualizing the result
+# Step5 - Visualizing the result
 results = list(rules)
 list_results = [list(results[i][0]) for i in range(0,len(results))]
